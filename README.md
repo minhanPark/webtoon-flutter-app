@@ -39,3 +39,32 @@ void getTodaysToons() async {
 ```
 
 일단 통신하려면 future 타입에 대해서 알아야 하는데 자바스크립트의 프로미스와 비슷한 애다. 데이터 값을 기다릴려면 await를 사용해야하고 await를 사용하려면 async를 사용해야한다.
+
+## screen에서 데이터를 갖고오는 기초적인 방법
+
+```dart
+class _HomeScreenState extends State<HomeScreen> {
+  List<WebtoonModel> webtoons = [];
+  bool isLoading = true;
+
+  void waitForWebtoons() async {
+    webtoons = await ApiService.getTodaysToons();
+    isLoading = false;
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    waitForWebtoons();
+  }
+}
+```
+
+1. StatefullWidget으로 변경시킨다.
+2. 데이터를 담을 변수와 로딩상태를 표시할 변수를 만든다.
+3. 데이터를 갖고오는 함수를 만든다(내부에서 await를 사용해서 데이터를 갖고오고, 로딩상태 변경 후 setState를 실행시킨다.)
+4. initState를 정의해서 거기에서 3번 함수를 실행시킨다.
+
+> 빌드보다 먼저 initState가 실행되고, waitForWebtoons가 실행되면서 데이터를 갖고온다. 가지고 오는 동안 build가 실행되고, 데이터가 도착한 뒤 setState가 실행되면서 build가 다시 실행된다.
