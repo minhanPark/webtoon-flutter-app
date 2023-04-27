@@ -68,3 +68,28 @@ class _HomeScreenState extends State<HomeScreen> {
 4. initState를 정의해서 거기에서 3번 함수를 실행시킨다.
 
 > 빌드보다 먼저 initState가 실행되고, waitForWebtoons가 실행되면서 데이터를 갖고온다. 가지고 오는 동안 build가 실행되고, 데이터가 도착한 뒤 setState가 실행되면서 build가 다시 실행된다.
+
+## FutureBuilder
+
+stateful위젯을 사용하지 않고도 데이터를 갖고와서 넣을 수 있다.  
+바로 FutureBuilder를 사용하면 된다.
+
+```dart
+Future<List<WebtoonModel>> webtoons = ApiService.getTodaysToons();
+
+Widget build(BuildContext context) {
+    return Scaffold(
+      body: FutureBuilder(
+        future: webtoons,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return const Text('There is a data');
+          }
+          return const Text('Loading....');
+        },
+      ),
+    );
+  }
+```
+
+간단하게
