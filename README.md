@@ -149,3 +149,32 @@ Navigator은 새롭게 페이지처럼 만들어준다. MaterialPageRoute로 위
 ## Hero 위젯
 
 애니메이션 효과를 주는 위젯으로, 같은 태그(가령 id)를 사용하면 같은 위젯이 이동하는 것처럼 느껴지게 해준다.
+
+## arguments가 있을 때 초기화
+
+```dart
+final Future<List<WebtoonModel>> webtoons = ApiService.getTodaysToons();
+```
+
+홈 스크린에서는 위와 같이 데이터를 불러오고 해당 데이터에 FutureBuilder를 사용해서 데이터가 있을 때와 없을 때를 나눠서 표시해줬다.  
+그러나 인수가 있는 애들은 저런식으로 초기화 할 수 없다.
+
+```dart
+class _DetailScreenState extends State<DetailScreen> {
+  late Future<WebtoonDetailModel> webtoon;
+  late Future<List<WebtoonEpisodeModel>> episodes;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    webtoon = ApiService.getToonById(widget.id);
+    episodes = ApiService.getLatesEpisodeById(widget.id);
+  }
+}
+```
+
+stateless위젯에서 stateful위젯으로 변경하면서,
+late 값을 주고 initState에서 값을 넣어준다.
+
+> stateful 위젯에서 stateless위젯의 값에는 어떻게 접근할까? widget.id 형태로 접근할 수 있다.
