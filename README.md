@@ -92,4 +92,60 @@ Widget build(BuildContext context) {
   }
 ```
 
-간단하게
+간단하게 위에 같이 webtoons를 선언하고, future에 넣어주면 된다. 그리고 builder에서 context와 snapshot을 받는데, snapshot에는 데이터가 있는지 에러가 있는 지 등 데이터, 에러, 상태 등이 담겨져 있다
+
+## ListView
+
+기본적인 리스트뷰는 최적화가 안되어있다고 한다.
+
+```dart
+ListView.builder(
+  itemCount: webtoons.length,
+  itemBuilder: (context, index) {
+    return Text(webtoons[index].title);
+  }
+)
+```
+
+이런식으로 사용하면 index를 통해서 어디까지 갖고왔는 지도 확인할 수 있고, 사용자의 화면에 맞게 갖고올 것이다.  
+강의에선 ListView.separated를 사용했는데
+
+```dart
+separatorBuilder: (context, index) {
+                return const SizedBox(
+                  width: 20,
+                );
+}
+```
+
+얘는 각각의 아이템 사이에 위젯을 넣을 수 있다.
+
+## 사용자의 이벤트 감지
+
+사용자들의 이벤트를 감지하는 위젯은 GestureDetector이다.
+거기에 onTap을 사용해서 사용자의 터치를 감지할 수 있다.
+
+```dart
+GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DetailScreen(
+              title: title,
+              thumb: thumb,
+              id: id,
+            ),
+            fullscreenDialog: true,
+          ),
+        );
+      }
+)
+```
+
+Navigator은 새롭게 페이지처럼 만들어준다. MaterialPageRoute로 위젯을 감싸서 전달해주면 된다.
+새로 페이지를 만들어주는 것이기 때문에 **기존에 들어가있던 스카폴드를 다시 만들어줘야한다.**
+
+## Hero 위젯
+
+애니메이션 효과를 주는 위젯으로, 같은 태그(가령 id)를 사용하면 같은 위젯이 이동하는 것처럼 느껴지게 해준다.
