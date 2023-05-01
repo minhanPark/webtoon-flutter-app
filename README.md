@@ -178,3 +178,22 @@ stateless위젯에서 stateful위젯으로 변경하면서,
 late 값을 주고 initState에서 값을 넣어준다.
 
 > stateful 위젯에서 stateless위젯의 값에는 어떻게 접근할까? widget.id 형태로 접근할 수 있다.
+
+## launchUrlString 사용하기
+
+전화, 문자, 인터ㄴ넷 등을 사용할 수 있게 해주는 위젯이다.
+
+```dart
+await launchUrlString(
+      "https://comic.naver.com/webtoon/detail?titleId=$webtoonId&no=${episode.id}",
+    );
+```
+
+ios, android 등 각각의 설정이 있으니 리드미를 보고 따라해야한다.
+
+> 플러터 내부만 고쳤다면 껏다 켤 필요는 없는데, ios, android 설정을 바꿨다면 껏다 켜야한다.
+
+## 데이터 저장하기
+
+shared_preferences를 사용하면 데이터를 저장할 수 있다. 웹으로 따지면 로컬스토리지 같은 역할.
+설치후에 적용하려고 하니 다시 시작해야했다.
